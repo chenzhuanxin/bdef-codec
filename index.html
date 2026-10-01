@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BDEF 编解码工作台 · 基于中国剩余定理的字符编码</title>
-<meta name="description" content="BDEF 编码法在线工具：中国剩余定理字符编码，支持基础编码、密钥多对多、AES-256-GCM 三种模式。纯本地运行，不上传任何内容。">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text y='74' x='50' text-anchor='middle' font-size='64' fill='white' font-family='monospace'>B</text></svg>">
+<title>公歧子的编解码工作台</title>
+<meta name="description" content="公歧子的编解码工作台：在线加密解密工具，纯本地运行，不上传任何内容。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text y='74' x='50' text-anchor='middle' font-size='58' fill='white' font-family='monospace'>公</text></svg>">
 <style>
 /* ===================== 设计变量 ===================== */
 :root{
@@ -48,29 +48,15 @@ body{
 .wrap{position:relative; z-index:1; max-width:1240px; margin:0 auto; padding:40px 22px 72px}
 
 /* -------- 头部 -------- */
-.hero{display:flex; flex-wrap:wrap; gap:26px; align-items:flex-end; justify-content:space-between; margin-bottom:26px}
+.hero{display:flex; flex-wrap:wrap; gap:26px; align-items:center; justify-content:space-between; margin-bottom:26px}
 .brand{display:flex; align-items:center; gap:15px}
 .logo{
   width:56px;height:56px;border-radius:16px;flex:none;
   background:linear-gradient(140deg,var(--brand),var(--brand-2));
-  color:#fff;display:grid;place-items:center;font:700 26px/1 var(--mono);
+  color:#fff;display:grid;place-items:center;font:700 26px/1 var(--sans);
   box-shadow:0 12px 26px -10px rgba(79,70,229,.75);
 }
 .brand h1{margin:0;font-size:27px;letter-spacing:-.4px;font-weight:750}
-.brand p{margin:3px 0 0;color:var(--text-2);font-size:13.5px}
-.brand p b{color:var(--brand);font-weight:650}
-
-.status{display:flex;flex-wrap:wrap;gap:9px}
-.pill{
-  display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;
-  background:var(--card);backdrop-filter:blur(12px);border:1px solid var(--line);
-  font-size:12.5px;color:var(--text-2);font-weight:550;white-space:nowrap;
-  box-shadow:0 1px 2px rgba(19,26,58,.04);
-}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--text-3);flex:none}
-.pill.ok .dot{background:var(--ok); box-shadow:0 0 0 3px var(--ok-soft)}
-.pill.err .dot{background:#e11d48; box-shadow:0 0 0 3px #ffe4e6}
-.pill.warn .dot{background:#f59e0b; box-shadow:0 0 0 3px var(--warn-soft)}
 
 /* -------- 卡片 -------- */
 .card{
@@ -95,27 +81,15 @@ body{
 }
 .seg button{
   position:relative;z-index:1;border:0;background:transparent;cursor:pointer;
-  padding:10px 6px;border-radius:10px;font:inherit;font-size:13.5px;font-weight:600;
-  color:var(--text-2);transition:color .2s;display:flex;flex-direction:column;gap:2px;align-items:center;
+  padding:11px 6px;border-radius:10px;font:inherit;font-size:13.5px;font-weight:600;
+  color:var(--text-2);transition:color .2s;
 }
-.seg button small{font-size:11px;font-weight:500;color:var(--text-3)}
 .seg button[aria-selected="true"]{color:var(--brand)}
-.seg button[aria-selected="true"] small{color:var(--brand-2);opacity:.85}
-
-.mode-note{
-  display:flex;gap:11px;align-items:flex-start;margin-top:15px;padding:12px 14px;
-  border-radius:var(--radius-sm);font-size:13px;line-height:1.55;
-  background:var(--brand-soft);color:#3730a3;border:1px solid rgba(79,70,229,.14);
-}
-.mode-note b{font-weight:700}
-.mode-note .ico{flex:none;font-size:15px;line-height:1.4}
-.mode-note code{font-family:var(--mono);background:rgba(255,255,255,.7);padding:1px 5px;border-radius:5px}
 
 /* -------- 密钥区 -------- */
 .key-row{display:flex;gap:12px;align-items:flex-end;margin-top:16px;flex-wrap:wrap}
 .field{flex:1 1 260px;min-width:220px}
 .field label{display:block;font-size:12.5px;font-weight:650;color:var(--text-2);margin-bottom:6px}
-.field label em{font-style:normal;color:var(--text-3);font-weight:500}
 .input-wrap{position:relative;display:flex;align-items:center}
 .input-wrap input{
   width:100%;padding:11px 42px 11px 14px;border-radius:var(--radius-sm);
@@ -198,43 +172,6 @@ textarea:focus{outline:0;border-color:var(--brand);box-shadow:0 0 0 4px rgba(79,
 .alert .ico{flex:none;font-size:15px;line-height:1.4}
 .alert code{font-family:var(--mono);background:rgba(255,255,255,.65);padding:1px 5px;border-radius:5px}
 
-/* -------- 码书速查 -------- */
-.lookup{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.lookup .field{margin:0}
-.lookup-out{
-  margin-top:12px;min-height:56px;padding:13px 15px;border-radius:var(--radius-sm);
-  background:#fbfcff;border:1px dashed var(--line-strong);font-size:13.5px;color:var(--text-2);
-  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
-}
-.lookup-out .big{font-size:26px;font-weight:700;line-height:1;font-family:var(--mono);color:var(--brand)}
-.lookup-out .kv{display:flex;flex-direction:column;gap:1px}
-.lookup-out .kv span:first-child{font-size:10.5px;color:var(--text-3);letter-spacing:.06em;text-transform:uppercase;font-weight:650}
-.lookup-out .kv span:last-child{font-size:13.5px;color:var(--text);font-weight:600;font-family:var(--mono)}
-
-/* -------- 统计 -------- */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
-.stat{padding:13px 15px;border-radius:var(--radius-sm);background:#fbfcff;border:1px solid var(--line)}
-.stat .k{font-size:11.5px;color:var(--text-3);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
-.stat .v{font-size:19px;font-weight:700;margin-top:3px;font-family:var(--mono);color:var(--text)}
-
-/* -------- 说明 -------- */
-details.about summary{
-  cursor:pointer;list-style:none;padding:17px 22px;font-size:14px;font-weight:650;
-  display:flex;align-items:center;gap:10px;color:var(--text-2);
-}
-details.about summary::-webkit-details-marker{display:none}
-details.about summary::after{content:"▾";margin-left:auto;transition:transform .22s;color:var(--text-3)}
-details.about[open] summary::after{transform:rotate(180deg)}
-details.about .inner{padding:0 22px 22px;color:var(--text-2);font-size:13.8px;line-height:1.75}
-details.about h3{font-size:14px;color:var(--text);margin:20px 0 8px;font-weight:700}
-details.about h3:first-child{margin-top:0}
-details.about code{font-family:var(--mono);font-size:12.6px;background:#eef1fa;padding:2px 6px;border-radius:6px;color:#3730a3}
-details.about table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
-details.about th,details.about td{border:1px solid var(--line-strong);padding:8px 11px;text-align:left;vertical-align:top}
-details.about th{background:#f6f8fd;font-weight:650;color:var(--text)}
-details.about ul{padding-left:20px;margin:8px 0}
-details.about li{margin:5px 0}
-
 /* Toast */
 #toast{
   position:fixed;left:50%;bottom:34px;transform:translate(-50%,26px);
@@ -247,8 +184,6 @@ details.about li{margin:5px 0}
 #toast.ok{background:#0f766e}
 
 footer.credits{text-align:center;color:var(--text-3);font-size:12.5px;margin-top:34px;line-height:1.9}
-footer.credits a{color:var(--brand);text-decoration:none;font-weight:600}
-footer.credits a:hover{text-decoration:underline}
 
 /* 响应式 */
 @media (max-width:980px){
@@ -256,13 +191,11 @@ footer.credits a:hover{text-decoration:underline}
   .rail{flex-direction:row;flex-wrap:wrap;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 18px;gap:12px}
   .arrow-btn{width:auto;flex:1 1 130px}
   .pane + .pane{border-left:0;border-top:1px solid var(--line)}
-  .lookup{grid-template-columns:1fr}
   .seg .thumb{display:none}
 }
 @media (max-width:620px){
   .wrap{padding:26px 14px 56px}
   .brand h1{font-size:22px}
-  .seg button small{display:none}
   .card-pad{padding:17px 16px}
   .pane{padding:14px}
 }
@@ -275,16 +208,10 @@ footer.credits a:hover{text-decoration:underline}
 <div class="wrap">
   <header class="hero">
     <div class="brand">
-      <div class="logo">B</div>
+      <div class="logo">公</div>
       <div>
-        <h1>BDEF 编解码工作台</h1>
-        <p>把 <b>中国剩余定理</b> 用在字符编码上 · 11 × 13 × 14 × 15 = 30030</p>
+        <h1>公歧子的编解码工作台</h1>
       </div>
-    </div>
-    <div class="status">
-      <span class="pill" id="pill-book"><span class="dot"></span>码书加载中…</span>
-      <span class="pill" id="pill-aes"><span class="dot"></span>AES 检测中…</span>
-      <span class="pill" id="pill-mode"><span class="dot"></span>基础模式</span>
     </div>
   </header>
 
@@ -293,14 +220,14 @@ footer.credits a:hover{text-decoration:underline}
     <h2 class="card-title"><span class="bar"></span>编码模式</h2>
     <div class="seg" id="seg" role="tablist">
       <div class="thumb" id="thumb"></div>
-      <button role="tab" data-mode="basic" aria-selected="true">基础编码<small>无密钥 · 纯编码</small></button>
-      <button role="tab" data-mode="multi" aria-selected="false">多对多<small>密钥 · IV · 噪声</small></button>
-      <button role="tab" data-mode="aes" aria-selected="false">AES 叠加<small>AES-256-GCM</small></button>
+      <button role="tab" data-mode="basic" aria-selected="true">基础编码</button>
+      <button role="tab" data-mode="multi" aria-selected="false">多对多</button>
+      <button role="tab" data-mode="aes" aria-selected="false">AES 叠加</button>
     </div>
 
     <div class="key-row">
       <div class="field disabled" id="key-field">
-        <label for="key">密钥<em> · 多对多 / AES 模式使用</em></label>
+        <label for="key">密钥</label>
         <div class="input-wrap">
           <input id="key" type="password" placeholder="请输入密钥，例如：wo-de-mi-yao-2026" disabled autocomplete="off" spellcheck="false">
           <button class="eye" id="eye" type="button" title="显示 / 隐藏密钥" disabled>👁</button>
@@ -308,8 +235,6 @@ footer.credits a:hover{text-decoration:underline}
       </div>
       <button class="btn" id="genkey" type="button" disabled>随机密钥</button>
     </div>
-
-    <div class="mode-note" id="mode-note"></div>
   </section>
 
   <!-- ============ 工作区 ============ -->
@@ -321,7 +246,7 @@ footer.credits a:hover{text-decoration:underline}
           <span class="tag muted" id="plain-count">0 字</span>
         </div>
         <div class="pane-body">
-          <textarea id="plain" placeholder="在这里输入要编码的文字……&#10;支持中文（含繁体）、英文、日文假名、俄文、希腊字母、泰文等码书内字符。" spellcheck="false"></textarea>
+          <textarea id="plain" placeholder="在这里输入要编码的文字……" spellcheck="false"></textarea>
         </div>
         <div class="pane-foot">
           <button class="btn sm" id="sample" type="button">示例</button>
@@ -355,83 +280,8 @@ footer.credits a:hover{text-decoration:underline}
     <div id="alert" class="alert"></div>
   </section>
 
-  <!-- ============ 统计 ============ -->
-  <section class="card card-pad">
-    <h2 class="card-title"><span class="bar"></span>运行统计</h2>
-    <div class="stats">
-      <div class="stat"><div class="k">码书总量</div><div class="v" id="s-book">—</div></div>
-      <div class="stat"><div class="k">明文字符</div><div class="v" id="s-chars">0</div></div>
-      <div class="stat"><div class="k">密文分组</div><div class="v" id="s-groups">0</div></div>
-      <div class="stat"><div class="k">噪声分组</div><div class="v" id="s-noise">0</div></div>
-      <div class="stat"><div class="k">信息量 / 字符</div><div class="v" id="s-bits">14.87 bit</div></div>
-      <div class="stat"><div class="k">本次操作</div><div class="v" id="s-ops">0</div></div>
-    </div>
-  </section>
-
-  <!-- ============ 码书速查 ============ -->
-  <section class="card card-pad">
-    <h2 class="card-title"><span class="bar"></span>码书速查</h2>
-    <div class="lookup">
-      <div class="field">
-        <label for="lk-char">输入字符 → 查编码</label>
-        <div class="input-wrap"><input id="lk-char" maxlength="8" placeholder="例如：你" spellcheck="false"></div>
-      </div>
-      <div class="field">
-        <label for="lk-code">输入编码 → 查字符（1 ~ 30030）</label>
-        <div class="input-wrap"><input id="lk-code" inputmode="numeric" placeholder="例如：353" spellcheck="false"></div>
-      </div>
-    </div>
-    <div class="lookup-out" id="lk-out">在任意一边输入内容，即可反查码书。</div>
-  </section>
-
-  <!-- ============ 说明 ============ -->
-  <details class="card about">
-    <summary>📖 算法原理、安全性与使用说明</summary>
-    <div class="inner">
-      <h3>1. 它到底做了什么</h3>
-      <p>码书给每个字符分配一个 <code>1 ~ 30030</code> 的唯一序号 <code>n</code>。加密时把 <code>n</code> 分别对
-      <code>11</code>、<code>13</code>、<code>14</code>、<code>15</code> 取余，得到四个余数，各转成一个十六进制字符，
-      拼成 4 位编码，用 <code>-</code> 分组。</p>
-      <p>例如「一」的序号是 1：<code>1 % 11 = 1</code>、<code>1 % 13 = 1</code>、<code>1 % 14 = 1</code>、<code>1 % 15 = 1</code>
-      → 密文 <code>1111</code>。</p>
-
-      <h3>2. 为什么可逆 —— 中国剩余定理</h3>
-      <p>11、13、14、15 两两互质，乘积正好是 <code>30030</code>。按中国剩余定理，任意 <code>0 ~ 30029</code> 的整数都能被
-      这四个余数<b>唯一确定</b>，于是与 <code>1 ~ 30030</code> 的字符编号形成一一对应（双射）。解码时逐组还原余数、
-      用中国剩余定理反解序号、再查码书即可。<b>本项目已对 30030 个序号全部做过可逆性验证。</b></p>
-      <p>每字符用 4 位十六进制承载，约 <code>14.87 bit</code>；理论空间 16 bit，冗余约 7%。</p>
-
-      <h3>3. 三种模式对比</h3>
-      <table>
-        <tr><th>模式</th><th>机制</th><th>安全性</th></tr>
-        <tr><td><b>基础编码</b></td><td>纯中国剩余定理编码，无密钥</td><td>无。同一字符密文恒定，可频率分析、可直接反推码表</td></tr>
-        <tr><td><b>多对多</b></td><td>密钥派生 (a,b) 做模 30030 可逆线性变换 + 随机 IV + 链式混淆 + <code>~</code> 噪声组</td><td>弱。属于混淆而非密码学加密，只提高门槛</td></tr>
-        <tr><td><b>AES 叠加</b></td><td>先做多对多编码，再套 AES-256-GCM（PBKDF2-SHA256，10 万次迭代，随机盐 16B + IV 12B，整体 Base64）</td><td>强。安全性由 AES 提供，可抵御已知明文攻击、可检测篡改</td></tr>
-      </table>
-
-      <h3>4. ⚠️ 必须知道的安全边界</h3>
-      <ul>
-        <li>基础模式与多对多模式<b>都不是加密算法</b>，只是编码 / 混淆，不能用于隐私、金融、军事或网络传输保密。</li>
-        <li>真正需要保密时请使用 <b>AES 叠加模式</b>。AES 模式需要通过 <b>HTTPS 或 localhost</b> 打开页面，否则浏览器不提供 <code>crypto.subtle</code>。</li>
-        <li>码书中没有的字符（例如 emoji、极生僻字）<b>会被跳过</b>，界面上会明确提示，请自行核对。</li>
-        <li>密钥一旦丢失，多对多与 AES 模式的数据<b>无法恢复</b>。</li>
-      </ul>
-
-      <h3>5. 快捷键与离线使用</h3>
-      <ul>
-        <li><code>Ctrl / ⌘ + Enter</code>：在明文区执行加密，在密文区执行解密。<code>Esc</code> 关闭提示条。</li>
-        <li>本页面完全在浏览器本地运行，<b>不联网、不上传任何内容</b>。</li>
-        <li>码书由同目录的 <code>codebook.js</code> 提供（用 <code>generate_codebook.py</code> 生成），当前共
-            <b><span id="about-book">30030</span></b> 条。</li>
-        <li>与项目内的 Python 工具（<code>bdef_core.py</code> / <code>bdef_panel.py</code> / <code>bdef_excel.py</code>）
-            <b>字节级互通</b>：网页加密的数据可以用 Python 解密，反之亦然。</li>
-      </ul>
-    </div>
-  </details>
-
   <footer class="credits">
-    BDEF 编码法 · 灵感与算法来自公众号文章《公歧子：BDEF编码法》系列<br>
-    本项目仅用于教学与趣味实践，请勿用于任何需要真实保密的场景。
+    公歧子微信：gongqizi0
   </footer>
 </div>
 
@@ -451,10 +301,7 @@ if(!window.BDEF){
   return;
 }
 const codec = BDEF.fromGlobals();
-const CB = codec.cb;
-const CHARS = CB.chars;
 const TOTAL = BDEF.TOTAL;
-const NOISE = BDEF.NOISE;
 const hasSubtle = BDEF.aes.hasSubtle;
 
 /* ================= DOM ================= */
@@ -463,10 +310,8 @@ const elSeg = $("seg"), elThumb = $("thumb");
 const elPlain = $("plain"), elCipher = $("cipher"), elKey = $("key");
 const elAlert = $("alert"), elToast = $("toast"), elEye = $("eye");
 const elPlainCount = $("plain-count"), elCipherCount = $("cipher-count");
-const elSGroups = $("s-groups"), elSNoise = $("s-noise"), elSOps = $("s-ops");
 
 let mode = "basic";
-let ops = 0;
 
 /* ================= 提示 ================= */
 let toastTimer = null;
@@ -488,49 +333,8 @@ function escapeHtml(s){
     return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c];
   });
 }
-function kv(k, v){
-  return '<span class="kv"><span>' + k + '</span><span>' + escapeHtml(String(v)) + "</span></span>";
-}
-
-/* ================= 状态栏 ================= */
-function refreshStatus(){
-  const pillBook = $("pill-book");
-  if(CHARS.length === TOTAL){
-    pillBook.className = "pill ok";
-    pillBook.innerHTML = '<span class="dot"></span>码书已载入 ' + CHARS.length + " 条";
-  } else if(CHARS.length > 0){
-    pillBook.className = "pill warn";
-    pillBook.innerHTML = '<span class="dot"></span>码书不完整 ' + CHARS.length + "/" + TOTAL;
-  } else {
-    pillBook.className = "pill err";
-    pillBook.innerHTML = '<span class="dot"></span>码书缺失';
-  }
-
-  const pillAes = $("pill-aes");
-  if(hasSubtle){
-    pillAes.className = "pill ok";
-    pillAes.innerHTML = '<span class="dot"></span>AES-256-GCM 就绪';
-  } else {
-    pillAes.className = "pill warn";
-    pillAes.innerHTML = '<span class="dot"></span>AES 不可用（需 HTTPS/localhost）';
-  }
-
-  const names = { basic: "基础模式", multi: "多对多模式", aes: "AES 叠加模式" };
-  const pillMode = $("pill-mode");
-  pillMode.className = "pill" + (mode === "basic" ? "" : " ok");
-  pillMode.innerHTML = '<span class="dot"></span>' + names[mode];
-
-  $("s-book").textContent = CHARS.length || "—";
-  $("about-book").textContent = CHARS.length || "0";
-}
 
 /* ================= 模式切换 ================= */
-const NOTES = {
-  basic: '<span class="ico">💡</span><span><b>基础编码</b>：每个字符查码书得到 1~30030 的序号，再按 11 / 13 / 14 / 15 取四个余数，转成十六进制拼出 4 位编码，用 <code>-</code> 分隔。规则公开、没有密钥，<b>只适合教学与趣味谜题，不具备保密性</b>。</span>',
-  multi: '<span class="ico">🔑</span><span><b>多对多</b>：密钥经 FNV-1a 哈希派生出 (a, b)，对序号做模 30030 的<b>可逆线性变换</b>，再叠加随机 IV、链式依赖与 <code>~</code> 噪声组，因此同一明文每次密文都不同。<b>属于混淆而非密码学加密，请勿用于真实保密</b>。</span>',
-  aes:   '<span class="ico">🛡️</span><span><b>AES 叠加</b>：先做多对多编码，再用 <code>AES-256-GCM</code> 整体加密。密钥经 PBKDF2-SHA256（10 万次迭代）+ 随机盐派生，输出 Base64。{AES_NOTE}</span>'
-};
-
 function setMode(next){
   mode = next;
   const btns = elSeg.querySelectorAll("button[data-mode]");
@@ -547,40 +351,26 @@ function setMode(next){
   elEye.disabled = !needKey;
   $("genkey").disabled = !needKey;
   $("key-field").classList.toggle("disabled", !needKey);
-
-  $("mode-note").innerHTML = (next === "aes")
-    ? NOTES.aes.replace("{AES_NOTE}", hasSubtle
-        ? "本机环境可用，<b>这是唯一具备实际保密能力的模式</b>。"
-        : "<b>当前环境不可用</b>：请通过 HTTPS 或 localhost 打开页面。")
-    : NOTES[next];
-
-  refreshStatus();
 }
 
 /* ================= 计数 ================= */
 function refreshCounts(){
   const plainN = Array.from(elPlain.value.replace(/\s+/g, "")).length;
   elPlainCount.textContent = plainN + " 字";
-  $("s-chars").textContent = plainN;
 
   const c = elCipher.value;
   const st = codec.stats(c, mode);
   if(mode === "aes"){
     elCipherCount.textContent = (st.chars ? st.chars + " 位" : "0 位");
-    elSGroups.textContent = "—";
-    elSNoise.textContent = "—";
   } else {
     elCipherCount.textContent = st.groups + " 组" + (st.noise ? " · " + st.noise + " 噪声" : "");
-    elSGroups.textContent = st.groups;
-    elSNoise.textContent = st.noise;
   }
 }
 
 /* ================= 校验 ================= */
 function checkKey(){
   if(!elKey.value.trim()){
-    alertBox("warn", "<b>请先填写密钥。</b>当前是"
-      + (mode === "multi" ? "多对多" : "AES 叠加") + "模式，没有密钥无法加解密。");
+    alertBox("warn", "<b>请先填写密钥。</b>当前模式没有密钥无法加解密。");
     elKey.focus();
     return false;
   }
@@ -592,8 +382,7 @@ function reportMissing(missing){
     alertBox("warn", "以下 " + uniq.length + " 个字符不在码书中，<b>已被跳过</b>："
       + uniq.map(function(c){
           return "<code>" + escapeHtml(c === " " ? "␠" : c) + "</code>";
-        }).join(" ")
-      + "。码书覆盖全部 CJK 统一汉字（含繁体）、英拉字母、日文假名、标点符号、希腊/西里尔字母、泰文与部分韩文。");
+        }).join(" "));
   } else {
     alertBox("ok", "处理完成。");
   }
@@ -605,7 +394,7 @@ function doEncrypt(){
   if(!plain){ toast("请先输入要加密的明文", "err"); elPlain.focus(); return; }
   if(mode !== "basic" && !checkKey()) return;
   if(mode === "aes" && !hasSubtle){
-    alertBox("err", "<b>AES 不可用。</b>浏览器只在 HTTPS 或 localhost 环境中提供 <code>crypto.subtle</code>，请改用其它模式或换环境打开。");
+    alertBox("err", "<b>AES 不可用。</b>请通过 HTTPS 或 localhost 打开页面。");
     return;
   }
   let result;
@@ -618,7 +407,6 @@ function doEncrypt(){
   }
   Promise.resolve(result).then(function(res){
     elCipher.value = res.text;
-    ops++; elSOps.textContent = ops;
     refreshCounts();
     reportMissing(res.missing);
     toast("加密完成", "ok");
@@ -644,13 +432,11 @@ function doDecrypt(){
   }
   Promise.resolve(result).then(function(text){
     elPlain.value = text;
-    ops++; elSOps.textContent = ops;
     refreshCounts();
     alertBox("ok", "解密完成，已填入左侧明文区。");
     toast("解密完成", "ok");
   }).catch(function(e){
-    alertBox("err", "解密失败：" + escapeHtml(e.message || String(e))
-      + (mode === "aes" ? "（AES 校验失败通常意味着密钥不对，或密文被改动过）" : ""));
+    alertBox("err", "解密失败：" + escapeHtml(e.message || String(e)));
   });
 }
 
@@ -673,50 +459,8 @@ function copyText(text, label){
   } else { fallback(); }
 }
 
-/* ================= 码书速查 ================= */
-function renderLookup(ch){
-  const code = CB.codeOf(ch);
-  const out = $("lk-out");
-  if(code === null){
-    out.innerHTML = '<span style="color:var(--err)">字符 <b style="font-family:var(--mono)">'
-      + escapeHtml(ch) + "</b> 不在码书中（码书共 " + CHARS.length + " 条）</span>";
-    return;
-  }
-  const utf8 = Array.from(new TextEncoder().encode(ch))
-    .map(function(b){ return b.toString(16).toUpperCase().padStart(2, "0"); }).join(" ");
-  out.innerHTML =
-    '<span class="big">' + escapeHtml(ch) + "</span>" +
-    kv("编码", code) +
-    kv("BDEF 四位码", BDEF.encodeCode(code)) +
-    kv("Unicode", "U+" + ch.codePointAt(0).toString(16).toUpperCase().padStart(4, "0")) +
-    kv("类别", CB.categoryOf(code)) +
-    kv("UTF-8", utf8);
-}
-function lookupByChar(){
-  const v = $("lk-char").value;
-  if(!v){ $("lk-out").textContent = "在任意一边输入内容，即可反查码书。"; return; }
-  renderLookup(Array.from(v)[0]);
-}
-function lookupByCode(){
-  const v = $("lk-code").value.trim();
-  const out = $("lk-out");
-  if(!v){ out.textContent = "在任意一边输入内容，即可反查码书。"; return; }
-  const n = parseInt(v, 10);
-  if(Number.isNaN(n) || n < 1 || n > TOTAL){
-    out.innerHTML = '<span style="color:var(--err)">编码需为 1 ~ ' + TOTAL + " 之间的整数</span>";
-    return;
-  }
-  if(n > CHARS.length){
-    out.innerHTML = '<span style="color:var(--err)">编码 ' + n + " 超出当前码书范围（" + CHARS.length + " 条）</span>";
-    return;
-  }
-  renderLookup(CHARS[n - 1]);
-}
-
 /* ================= 示例 ================= */
-const SAMPLE = "中国剩余定理（Chinese Remainder Theorem）是一门古老的数学方法，\n"
-  + "它告诉我们：只要模数两两互质，一组余数就能唯一确定一个整数。\n"
-  + "BDEF 编码法正是借用了这一点，把 11 × 13 × 14 × 15 = 30030 用成了一个字符池。";
+const SAMPLE = "你好，世界！\n这是一段示例文字，点击「加密 →」看看会发生什么。";
 
 /* ================= 事件绑定 ================= */
 elSeg.addEventListener("click", function(e){
@@ -747,7 +491,7 @@ $("download").addEventListener("click", function(){
   const stamp = now.getFullYear() + p(now.getMonth()+1) + p(now.getDate())
               + "-" + p(now.getHours()) + p(now.getMinutes()) + p(now.getSeconds());
   const modeName = { basic:"基础编码", multi:"多对多", aes:"AES叠加" }[mode];
-  const body = "# BDEF 编解码工作台 导出结果\n"
+  const body = "# 公歧子的编解码工作台 导出结果\n"
     + "# 时间：" + now.toLocaleString() + "\n"
     + "# 模式：" + modeName + "\n"
     + (mode === "basic" ? "" : "# 密钥：" + elKey.value + "\n")
@@ -768,17 +512,13 @@ elPlain.addEventListener("keydown", function(e){
 elCipher.addEventListener("keydown", function(e){
   if((e.ctrlKey || e.metaKey) && e.key === "Enter"){ e.preventDefault(); doDecrypt(); }
 });
-$("lk-char").addEventListener("input", lookupByChar);
-$("lk-code").addEventListener("input", lookupByCode);
 document.addEventListener("keydown", function(e){ if(e.key === "Escape") alertHide(); });
 
 /* ================= 初始化 ================= */
 setMode("basic");
 refreshCounts();
-refreshStatus();
-if(CHARS.length === 0){
-  alertBox("err", "<b>码书未能载入。</b>请确认 <code>codebook.js</code> 与本页面在同一目录下，"
-    + "或运行 <code>python generate_codebook.py</code> 重新生成。");
+if(codec.cb.chars.length === 0){
+  alertBox("err", "<b>码书未能载入。</b>请确认 <code>codebook.js</code> 与本页面在同一目录下。");
 }
 })();
 </script>
