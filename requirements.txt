@@ -1,0 +1,7 @@
+# BDEF 编解码工作台 · 依赖
+#
+# 网页版 index.html、桌面面板 bdef_panel.py、码书生成器的 txt/js 输出
+# 都只用标准库，不需要安装任何东西。
+#
+# 只有 Excel 工具 bdef_excel.py 和码书的 xlsx 输出需要 openpyxl：
+openpyxl>=3.0.0

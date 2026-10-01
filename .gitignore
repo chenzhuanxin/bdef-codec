@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 交叉验证脚本产生的中间文件
+tools/_js_out.json
+tools/_py_out.json
+
+# 本地临时目录
+.tmp/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Excel 临时锁文件
+~$*.xlsx
+~$*.xls
