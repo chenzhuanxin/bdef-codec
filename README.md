@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/logo.png" width="120" alt="bdef-codec"></p>
+
 # BDEF 编解码工作台
 
 > 把**中国剩余定理**用在字符编码上 —— 11 × 13 × 14 × 15 = 30030
